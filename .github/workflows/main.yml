@@ -20,7 +20,26 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run : docker build -t stadom/react-test -f Dockerfile.dev .
-    - run : docker run -e CI=true stadom/react-test npm test    
+    - run : docker run -e CI=true stadom/react-test npm test  
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*' 
+    
+  CD-step:
+    runs-on: ubuntu-latest
+    needs  : [CI-step]
+    steps:
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v18
+      with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SEC_KEY }}
+          application_name: travis
+          environment_name: Travis-env
+          existing_bucket_name: elasticbeanstalk-eu-central-1-817076261729
+          region: eu-central-1
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
+    
      
  
 
