@@ -28,6 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     needs  : [CI-step]
     steps:
+    
+    - uses: actions/checkout@v3  
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*' 
+      
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v18
       with:
