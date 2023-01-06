@@ -10,7 +10,7 @@ before_install:
 script:
   - docker run -e CI=true os1979/docker-react npm run test -- --coverage
 
-before_deploy: "echo 'ready!?'"
+before_deploy: "echo 'ready!!!?'"
 
 deploy:
   provider: elasticbeanstalk
