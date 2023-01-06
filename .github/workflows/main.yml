@@ -1,0 +1,26 @@
+name: cicd-aws-eb
+run-name: ${{ github.actor }} is CICD pipeline from GitHub Actions AWS EB
+env:
+  AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SEC_KEY}}"
+  AWS_ACCESS_KEY_ID    : "${{ secrets.AWS_ACCESS_KEY}}"
+  PACKAGE_NAME         : "nodejs_app_${{ github.sha }}.zip"
+  EB_APP_NAME          : "app_nodejs"
+  EB_ENV_NAME          : "env-dev"
+  EB_S3_NAME           : "githubaction-to-beanstalk"
+  AWS_REGION           : "eu-central-1"
+
+  
+on:
+  push:
+    branches:
+      - main
+jobs:
+  CI-step:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run : docker build -t stadom/react-test -f Dockerfile.dev .
+    - run : docker run -e CI=true stadom/react-test npm test    
+     
+ 
+
