@@ -17,10 +17,10 @@ deploy:
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
   region: 'eu-central-1'
-  app: 'react'
-  env: 'React-env'
+  app: 'travis'
+  env: 'Travis-env'
   bucket_name: 'elasticbeanstalk-eu-central-1-817076261729'
-  bucket_path: 'react'
+  bucket_path: 'travis'
   on:
     branch: main
 
